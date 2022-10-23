@@ -27,6 +27,9 @@ const Home: NextPage = () => {
         <section className={styles.weddingInvite}>
           <div className={styles.weddingInviteWrap}>
             <h4>가장 소중하고 아름다운 순간에 초대합니다!</h4>
+            <div className="">
+              
+            </div>
           </div>
         </section>
       </main>
