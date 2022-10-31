@@ -1,44 +1,51 @@
-import create from "zustand";
+import create from 'zustand';
 
 export enum DialogType {
-    NONE,
-    ALERT,
-    CONFIRM,
+  NONE,
+  ALERT,
+  CONFIRM,
 }
 
 interface DialogState {
-    type: DialogType;
+  type: DialogType;
+  title: string;
+  message: string;
+  confirm: () => void;
+  dismiss: () => void;
+  showAlertDialog: (title: string, message: string) => void;
+  showConfirmDialog: (
     title: string,
     message: string,
-    confirm: () => void;
-    dismiss: () => void;
-    showAlertDialog: (title: string, message: string) => void;
-    showConfirmDialog: (title: string, message: string, onConfirm: () => void) => void;
+    onConfirm: () => void,
+  ) => void;
 }
 
 const initialState = {
-    type: DialogType.NONE,
-    title: '',
-    message: '',
-}
+  type: DialogType.NONE,
+  title: '',
+  message: '',
+};
 
 const useDialog = create<DialogState>()((set) => ({
-    ...initialState,
-    confirm: () => {},
-    dismiss: () => set((state) => ({
-        ...initialState
+  ...initialState,
+  confirm: () => {},
+  dismiss: () =>
+    set((state) => ({
+      ...initialState,
     })),
-    showAlertDialog: (title, message) => set((state) => ({
-        type: DialogType.ALERT,
-        title,
-        message,
+  showAlertDialog: (title, message) =>
+    set((state) => ({
+      type: DialogType.ALERT,
+      title,
+      message,
     })),
-    showConfirmDialog: (title, message, onConfirm) => set((state) => ({
-        type: DialogType.CONFIRM,
-        title,
-        message,
-        confirm: onConfirm,
+  showConfirmDialog: (title, message, onConfirm) =>
+    set((state) => ({
+      type: DialogType.CONFIRM,
+      title,
+      message,
+      confirm: onConfirm,
     })),
-}))
+}));
 
 export default useDialog;
