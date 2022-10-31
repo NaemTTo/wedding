@@ -1,10 +1,11 @@
 import {useState, useEffect, MouseEvent} from 'react';
-import useDialog from "./store"
+import useDialog, { DialogType } from "./store"
 import styles from '../styles/Dialog.module.css'
 import AlertDialog from './alert';
+import ConfirmDialog from './confirm';
 
 const DialogContainer = () => {
-    const {type, title, message, dismiss} = useDialog();
+    const {type, title, message, confirm, dismiss} = useDialog();
     const [isClosing, setClosing] = useState(false);
 
     useEffect(() => {
@@ -25,15 +26,19 @@ const DialogContainer = () => {
 
     let dialog;
     switch (type) {
-        case 'alert':
+        case DialogType.ALERT:
             dialog =  <AlertDialog title={title} message={message} dismiss={()=> setClosing(true)} />
+            break;
+    
+        case DialogType.CONFIRM:
+            dialog =  <ConfirmDialog title={title} message={message} confirm={confirm} dismiss={()=> setClosing(true)} />
             break;
     
         default:
             break;
     }
 
-    if (type === "") return null;
+    if (type === DialogType.NONE) return null;
 
     return (<div className={styles.wrapper} onClick={handleDialogClose}>
         <div className={isClosing ? styles.dismiss : styles.show}>

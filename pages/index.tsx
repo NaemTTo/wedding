@@ -5,7 +5,7 @@ import useDialog from '../dialogs/store'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
-  const showAlertDialog = useDialog((state) => state.showAlertDialog);
+  const [showAlertDialog, showConfirmDialog] = useDialog((state) => [state.showAlertDialog, state.showConfirmDialog]);
   return (
     <div>
       <Head>
@@ -31,6 +31,7 @@ const Home: NextPage = () => {
             <h4>가장 소중하고 아름다운 순간에 초대합니다!</h4>
             <div className="">
               <button onClick={() => showAlertDialog('Test Alert Dialog', 'This is simple alert dialog for test.')}>Alert</button>
+              <button onClick={() => showConfirmDialog('Test Confirm Dialog', 'This is simple confirm dialog for test.', () => {})}>Confirm</button>
             </div>
           </div>
         </section>
