@@ -1,16 +1,15 @@
 @font-face {
-  font-family: 'DeogonPrincess';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/DeogonPrincess.woff2')
-    format('woff2');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Cafe24Oneprettynight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'DeogonPrincess', -apple-system, BlinkMacSystemFont, Segoe UI,
+  font-family: 'Cafe24Oneprettynight', -apple-system, BlinkMacSystemFont, Segoe UI,
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
 }
