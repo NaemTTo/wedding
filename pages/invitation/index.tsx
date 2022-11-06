@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
+import { firestore } from '../../lib/firebase';
 
 const Container = styled.div`
   width: 100%;
@@ -47,10 +49,10 @@ const WeddingText = styled.p`
   margin-bottom: 5px;
 `;
 interface InvitationProps {
-  id: string;
+  creator: string;
 }
 
-const InvitationPage: NextPage<InvitationProps> = ({ id }) => {
+const InvitationPage: NextPage<InvitationProps> = ({ creator }) => {
   return (
     <div>
       <Head>
@@ -61,7 +63,7 @@ const InvitationPage: NextPage<InvitationProps> = ({ id }) => {
           <WeddingImgLayer />
           <WeddingTextWrap>
             <WeddingTitle>
-              ID: {id}
+              Creator: {creator}
               <br />
               00, 00
               <br /> 결혼합니다.
@@ -81,6 +83,8 @@ export const getServerSideProps: GetServerSideProps<InvitationProps> = async (
   context,
 ) => {
   const invitationId = context.query.id;
+
+  // id 쿼리가 없을 때
   if (typeof invitationId !== 'string' || invitationId === '') {
     return {
       redirect: {
@@ -89,10 +93,22 @@ export const getServerSideProps: GetServerSideProps<InvitationProps> = async (
       },
     };
   }
+
+  // 해당 id의 데이터가 없을 때
+  const docRef = doc(firestore, `invitation/${invitationId}`);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/invitation/unknown',
+      },
+    };
+  }
+
   return {
-    props: {
-      id: invitationId,
-    },
+    props: snapshot.data() as InvitationProps,
   };
 };
 
